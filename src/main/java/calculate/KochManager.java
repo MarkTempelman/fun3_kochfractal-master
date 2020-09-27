@@ -34,9 +34,12 @@ public class KochManager {
         koch.setLevel(nxt);
         tsCalc.init();
         tsCalc.setBegin("Begin calculating");
-        koch.generateLeftEdge();
-        koch.generateBottomEdge();
-        koch.generateRightEdge();
+        Thread leftEdgeThread = new Thread(leftEdgeRunnable);
+        Thread rightEdgeThread = new Thread(rightEdgeRunnable);
+        Thread bottomEdgeThread = new Thread(bottomEdgeRunnable);
+        leftEdgeThread.start();
+        rightEdgeThread.start();
+        bottomEdgeThread.start();
         tsCalc.setEnd("End calculating");
         application.setTextNrEdges("" + koch.getNrOfEdges());
         application.setTextCalc(tsCalc.toString());
@@ -57,4 +60,25 @@ public class KochManager {
     public void addEdge(Edge e) {
         edges.add(e);
     }
+
+    Runnable leftEdgeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            koch.generateLeftEdge();
+        }
+    };
+
+    Runnable rightEdgeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            koch.generateRightEdge();
+        }
+    };
+
+    Runnable bottomEdgeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            koch.generateBottomEdge();
+        }
+    };
 }
