@@ -20,6 +20,7 @@ public class KochManager {
     private FUN3KochFractalFX application;
     private TimeStamp tsCalc;
     private TimeStamp tsDraw;
+    private Integer count;
     
     public KochManager(FUN3KochFractalFX application) {
         this.edges = new ArrayList<Edge>();
@@ -30,6 +31,7 @@ public class KochManager {
     }
     
     public void changeLevel(int nxt) {
+        count = 0;
         edges.clear();
         koch.setLevel(nxt);
         tsCalc.init();
@@ -43,6 +45,9 @@ public class KochManager {
         tsCalc.setEnd("End calculating");
         application.setTextNrEdges("" + koch.getNrOfEdges());
         application.setTextCalc(tsCalc.toString());
+        while(count < 3){
+
+        }
         drawEdges();
     }
     
@@ -65,6 +70,7 @@ public class KochManager {
         @Override
         public void run() {
             koch.generateLeftEdge();
+            count++;
         }
     };
 
@@ -72,6 +78,7 @@ public class KochManager {
         @Override
         public void run() {
             koch.generateRightEdge();
+            count++;
         }
     };
 
@@ -79,6 +86,7 @@ public class KochManager {
         @Override
         public void run() {
             koch.generateBottomEdge();
+            count++;
         }
     };
 }
