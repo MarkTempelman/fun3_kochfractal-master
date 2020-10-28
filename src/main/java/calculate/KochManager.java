@@ -54,6 +54,9 @@ public class KochManager {
         leftEdgeThread = new Thread(leftEdge);
         rightEdgeThread = new Thread(rightEdge);
         bottomEdgeThread = new Thread(bottomEdge);
+        leftEdgeThread.run();
+        rightEdgeThread.run();
+        bottomEdgeThread.run();
 
         while(count < 3){
 
@@ -84,6 +87,6 @@ public class KochManager {
     }
 
     public synchronized void addEdges(ArrayList<Edge> edges){
-        edges.addAll(edges);
+        this.edges.addAll(edges);
     }
 }
