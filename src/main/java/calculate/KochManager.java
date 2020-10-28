@@ -20,10 +20,10 @@ public class KochManager {
     private FUN3KochFractalFX application;
     private TimeStamp tsCalc;
     private TimeStamp tsDraw;
-    private Integer count;
-    private AbstractEdge leftEdge;
-    private AbstractEdge rightEdge;
-    private AbstractEdge bottomEdge;
+    public Integer count;
+    private Runnable leftEdge;
+    private Runnable rightEdge;
+    private Runnable bottomEdge;
     Thread leftEdgeThread;
     Thread rightEdgeThread;
     Thread bottomEdgeThread;
@@ -54,14 +54,21 @@ public class KochManager {
         leftEdgeThread = new Thread(leftEdge);
         rightEdgeThread = new Thread(rightEdge);
         bottomEdgeThread = new Thread(bottomEdge);
+        leftEdgeThread.run();
+        rightEdgeThread.run();
+        bottomEdgeThread.run();
 
         while(count < 3){
-
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e){
+                System.out.println(e.getMessage());
+            }
         }
         tsCalc.setEnd("End calculating");
         application.setTextNrEdges("" + edges.size());
         application.setTextCalc(tsCalc.toString());
-        application.requestDrawEdges();
+        drawEdges();
     }
     
     public void drawEdges() {
@@ -84,6 +91,6 @@ public class KochManager {
     }
 
     public synchronized void addEdges(ArrayList<Edge> edges){
-        edges.addAll(edges);
+        this.edges.addAll(edges);
     }
 }
