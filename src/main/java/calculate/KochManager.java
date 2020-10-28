@@ -15,16 +15,22 @@ import timeutil.TimeStamp;
  */
 public class KochManager {
     
-    private KochFractal koch;
+    //private KochFractal koch;
     private ArrayList<Edge> edges;
     private FUN3KochFractalFX application;
     private TimeStamp tsCalc;
     private TimeStamp tsDraw;
     private Integer count;
+    private AbstractEdge leftEdge;
+    private AbstractEdge rightEdge;
+    private AbstractEdge bottomEdge;
+    Thread leftEdgeThread;
+    Thread rightEdgeThread;
+    Thread bottomEdgeThread;
     
     public KochManager(FUN3KochFractalFX application) {
         this.edges = new ArrayList<Edge>();
-        this.koch = new KochFractal(this);
+        //this.koch = new KochFractal(this);
         this.application = application;
         this.tsCalc = new TimeStamp();
         this.tsDraw = new TimeStamp();
@@ -33,22 +39,29 @@ public class KochManager {
     public void changeLevel(int nxt) {
         count = 0;
         edges.clear();
-        koch.setLevel(nxt);
+        //koch.setLevel(nxt);
         tsCalc.init();
         tsCalc.setBegin("Begin calculating");
-        Thread leftEdgeThread = new Thread(leftEdgeRunnable);
-        Thread rightEdgeThread = new Thread(rightEdgeRunnable);
-        Thread bottomEdgeThread = new Thread(bottomEdgeRunnable);
-        leftEdgeThread.start();
-        rightEdgeThread.start();
-        bottomEdgeThread.start();
-        tsCalc.setEnd("End calculating");
-        application.setTextNrEdges("" + koch.getNrOfEdges());
-        application.setTextCalc(tsCalc.toString());
+//        Thread leftEdgeThread = new Thread(leftEdgeRunnable);
+//        Thread rightEdgeThread = new Thread(rightEdgeRunnable);
+//        Thread bottomEdgeThread = new Thread(bottomEdgeRunnable);
+//        leftEdgeThread.start();
+//        rightEdgeThread.start();
+//        bottomEdgeThread.start();
+        leftEdge = new LeftEdge(this, nxt);
+        rightEdge = new RightEdge(this, nxt);
+        bottomEdge = new BottomEdge(this, nxt);
+        leftEdgeThread = new Thread(leftEdge);
+        rightEdgeThread = new Thread(rightEdge);
+        bottomEdgeThread = new Thread(bottomEdge);
+
         while(count < 3){
 
         }
-        drawEdges();
+        tsCalc.setEnd("End calculating");
+        application.setTextNrEdges("" + edges.size());
+        application.setTextCalc(tsCalc.toString());
+        application.requestDrawEdges();
     }
     
     public void drawEdges() {
@@ -61,32 +74,16 @@ public class KochManager {
         tsDraw.setEnd("End drawing");
         application.setTextDraw(tsDraw.toString());
     }
+
+    public synchronized void increaseCount(){
+        count++;
+    }
     
     public void addEdge(Edge e) {
         edges.add(e);
     }
 
-    Runnable leftEdgeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            koch.generateLeftEdge();
-            count++;
-        }
-    };
-
-    Runnable rightEdgeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            koch.generateRightEdge();
-            count++;
-        }
-    };
-
-    Runnable bottomEdgeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            koch.generateBottomEdge();
-            count++;
-        }
-    };
+    public synchronized void addEdges(ArrayList<Edge> edges){
+        edges.addAll(edges);
+    }
 }
