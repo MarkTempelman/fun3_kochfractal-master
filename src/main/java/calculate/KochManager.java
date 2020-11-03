@@ -6,6 +6,7 @@ package calculate;
 
 import java.util.ArrayList;
 import fun3kochfractalfx.FUN3KochFractalFX;
+import interfaces.Observer;
 import timeutil.TimeStamp;
 
 /**
@@ -13,7 +14,7 @@ import timeutil.TimeStamp;
  * @author Nico Kuijpers
  * Modified for FUN3 by Gertjan Schouten
  */
-public class KochManager {
+public class KochManager implements Observer {
     
     //private KochFractal koch;
     private ArrayList<Edge> edges;
@@ -88,5 +89,14 @@ public class KochManager {
 
     public synchronized void addEdges(ArrayList<Edge> edges){
         this.edges.addAll(edges);
+    }
+
+    @Override
+    public synchronized void update(Object object) {
+        if(object instanceof KochFractal){
+            KochFractal kochFractal = (KochFractal) object;
+            this.edges.addAll(kochFractal.getEdges());
+            count++;
+        }
     }
 }

@@ -10,16 +10,15 @@ public class BottomEdge extends AbstractEdge{
 
     public BottomEdge(KochManager manager, int level){
         this.manager = manager;
-        this.fractal = new KochFractal(this);
+        this.fractal = new KochFractal();
         this.level = level;
+        fractal.attachObserver(manager);
     }
 
     @Override
     public void run() {
         fractal.setLevel(level);
         fractal.generateBottomEdge();
-        manager.addEdges(edges);
-        manager.increaseCount();
     }
 
     @Override

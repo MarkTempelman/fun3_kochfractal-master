@@ -10,16 +10,15 @@ public class LeftEdge extends AbstractEdge{
 
     public LeftEdge(KochManager manager, int level){
         this.manager = manager;
-        this.fractal = new KochFractal(this);
+        this.fractal = new KochFractal();
         this.level = level;
+        fractal.attachObserver(manager);
     }
 
     @Override
     public void run() {
         fractal.setLevel(level);
         fractal.generateLeftEdge();
-        manager.addEdges(edges);
-        manager.increaseCount();
     }
 
     @Override

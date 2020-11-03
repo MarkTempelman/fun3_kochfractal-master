@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -58,6 +59,11 @@ public class FUN3KochFractalFX extends Application {
     private int counter = 0;
     private static final int THRESHOLD = 200_000;
     private final WritableImage image = new WritableImage(kpWidth, kpHeight);
+
+    private final ProgressBar progressLeft = new ProgressBar();
+    private final ProgressBar progressRight = new ProgressBar();
+    private final ProgressBar progressBottom = new ProgressBar();
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -157,6 +163,8 @@ public class FUN3KochFractalFX extends Application {
                 kochPanelMouseDragged(event);
             }
         });
+
+
         
         // Create Koch manager and set initial level
         resetZoom();
