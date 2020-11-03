@@ -43,6 +43,20 @@ public class KochManager implements Observer {
         bottomEdgeThread.interrupt();
     }
 
+    private void createEdges(int nxt){
+        leftEdge = new LeftEdge(this, nxt);
+        rightEdge = new RightEdge(this, nxt);
+        bottomEdge = new BottomEdge(this, nxt);
+    }
+
+    private void calculateEdges(){
+        leftEdgeThread = new Thread(leftEdge);
+        rightEdgeThread = new Thread(rightEdge);
+        bottomEdgeThread = new Thread(bottomEdge);
+        leftEdgeThread.start();
+        rightEdgeThread.start();
+        bottomEdgeThread.start();
+    }
     
     public void changeLevel(int nxt) {
         count = 0;
@@ -50,21 +64,8 @@ public class KochManager implements Observer {
         //koch.setLevel(nxt);
         tsCalc.init();
         tsCalc.setBegin("Begin calculating");
-//        Thread leftEdgeThread = new Thread(leftEdgeRunnable);
-//        Thread rightEdgeThread = new Thread(rightEdgeRunnable);
-//        Thread bottomEdgeThread = new Thread(bottomEdgeRunnable);
-//        leftEdgeThread.start();
-//        rightEdgeThread.start();
-//        bottomEdgeThread.start();
-        leftEdge = new LeftEdge(this, nxt);
-        rightEdge = new RightEdge(this, nxt);
-        bottomEdge = new BottomEdge(this, nxt);
-        leftEdgeThread = new Thread(leftEdge);
-        rightEdgeThread = new Thread(rightEdge);
-        bottomEdgeThread = new Thread(bottomEdge);
-        leftEdgeThread.start();
-        rightEdgeThread.start();
-        bottomEdgeThread.start();
+        createEdges(nxt);
+        calculateEdges();
 
         while (count < 3) {
             try {
