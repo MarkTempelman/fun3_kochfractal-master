@@ -1,8 +1,10 @@
 package calculate;
 
+import javafx.concurrent.Task;
+
 import java.util.ArrayList;
 
-public class BottomEdge extends AbstractEdge{
+public class BottomEdge extends Task{
     private KochManager manager;
     private KochFractal fractal;
     private int level;
@@ -16,18 +18,9 @@ public class BottomEdge extends AbstractEdge{
     }
 
     @Override
-    public void run() {
+    protected ArrayList<Edge> call() throws Exception {
         fractal.setLevel(level);
         fractal.generateBottomEdge();
-    }
-
-    @Override
-    public void addEdge(Edge edge) {
-        edges.add(edge);
-    }
-
-    @Override
-    public ArrayList<Edge> getEdges() {
-        return edges;
+        return null;
     }
 }

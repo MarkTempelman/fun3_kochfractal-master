@@ -21,7 +21,6 @@ public class KochFractal implements Subject {
     private int nrOfEdges = 3;  // The number of edges in the current level of the fractal
     private float hue;          // Hue value of color for next edge
     private boolean cancelled;  // Flag to indicate that calculation has been cancelled
-    private AbstractEdge abstractEdge;
     private ArrayList<Observer> observers = new ArrayList<>();
     private ArrayList<Edge> edges = new ArrayList<>();
 

@@ -22,9 +22,9 @@ public class KochManager implements Observer {
     private TimeStamp tsCalc;
     private TimeStamp tsDraw;
     private Integer count;
-    private AbstractEdge leftEdge;
-    private AbstractEdge rightEdge;
-    private AbstractEdge bottomEdge;
+    private LeftEdge leftEdge;
+    private RightEdge rightEdge;
+    private BottomEdge bottomEdge;
     Thread leftEdgeThread;
     Thread rightEdgeThread;
     Thread bottomEdgeThread;
@@ -36,6 +36,13 @@ public class KochManager implements Observer {
         this.tsCalc = new TimeStamp();
         this.tsDraw = new TimeStamp();
     }
+
+    public void endThreads(){
+        leftEdgeThread.interrupt();
+        rightEdgeThread.interrupt();
+        bottomEdgeThread.interrupt();
+    }
+
     
     public void changeLevel(int nxt) {
         count = 0;
@@ -55,12 +62,16 @@ public class KochManager implements Observer {
         leftEdgeThread = new Thread(leftEdge);
         rightEdgeThread = new Thread(rightEdge);
         bottomEdgeThread = new Thread(bottomEdge);
-        leftEdgeThread.run();
-        rightEdgeThread.run();
-        bottomEdgeThread.run();
+        leftEdgeThread.start();
+        rightEdgeThread.start();
+        bottomEdgeThread.start();
 
-        while(count < 3){
-
+        while (count < 3) {
+            try {
+                Thread.sleep(0);
+            } catch(InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
         }
         tsCalc.setEnd("End calculating");
         application.setTextNrEdges("" + edges.size());
