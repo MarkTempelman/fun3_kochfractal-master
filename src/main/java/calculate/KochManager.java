@@ -5,6 +5,9 @@
 package calculate;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import fun3kochfractalfx.FUN3KochFractalFX;
 import interfaces.Observer;
 import timeutil.TimeStamp;
@@ -25,9 +28,10 @@ public class KochManager implements Observer {
     private LeftEdge leftEdge;
     private RightEdge rightEdge;
     private BottomEdge bottomEdge;
-    Thread leftEdgeThread;
-    Thread rightEdgeThread;
-    Thread bottomEdgeThread;
+//    Thread leftEdgeThread;
+//    Thread rightEdgeThread;
+//    Thread bottomEdgeThread;
+    ExecutorService pool = Executors.newFixedThreadPool(3);
     
     public KochManager(FUN3KochFractalFX application) {
         this.edges = new ArrayList<Edge>();
@@ -38,9 +42,7 @@ public class KochManager implements Observer {
     }
 
     public void endThreads(){
-        leftEdgeThread.interrupt();
-        rightEdgeThread.interrupt();
-        bottomEdgeThread.interrupt();
+        pool.shutdown();
     }
 
     private void createEdges(int nxt){
@@ -50,12 +52,16 @@ public class KochManager implements Observer {
     }
 
     private void calculateEdges(){
-        leftEdgeThread = new Thread(leftEdge);
-        rightEdgeThread = new Thread(rightEdge);
-        bottomEdgeThread = new Thread(bottomEdge);
-        leftEdgeThread.start();
-        rightEdgeThread.start();
-        bottomEdgeThread.start();
+        count = 0;
+        pool.execute(leftEdge);
+        pool.execute(rightEdge);
+        pool.execute(bottomEdge);
+//        leftEdgeThread = new Thread(leftEdge);
+//        rightEdgeThread = new Thread(rightEdge);
+//        bottomEdgeThread = new Thread(bottomEdge);
+//        leftEdgeThread.start();
+//        rightEdgeThread.start();
+//        bottomEdgeThread.start();
     }
     
     public void changeLevel(int nxt) {
@@ -65,8 +71,8 @@ public class KochManager implements Observer {
         tsCalc.init();
         tsCalc.setBegin("Begin calculating");
         createEdges(nxt);
+        pool = Executors.newFixedThreadPool(3);
         calculateEdges();
-
         while (count < 3) {
             try {
                 Thread.sleep(0);

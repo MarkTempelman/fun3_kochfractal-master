@@ -21,6 +21,6 @@ public class RightEdge extends Task{
     protected ArrayList<Edge> call() throws Exception {
         fractal.setLevel(level);
         fractal.generateRightEdge();
-        return null;
+        return fractal.getEdges();
     }
 }

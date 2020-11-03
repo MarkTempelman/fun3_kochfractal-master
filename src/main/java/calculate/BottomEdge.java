@@ -21,6 +21,6 @@ public class BottomEdge extends Task{
     protected ArrayList<Edge> call() throws Exception {
         fractal.setLevel(level);
         fractal.generateBottomEdge();
-        return null;
+        return fractal.getEdges();
     }
 }
