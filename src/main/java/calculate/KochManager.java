@@ -110,11 +110,8 @@ public class KochManager implements Observer {
     }
 
     @Override
-    public synchronized void update(Object object) {
-        if(object instanceof KochFractal){
-            KochFractal kochFractal = (KochFractal) object;
-            this.edges.addAll(kochFractal.getEdges());
-            count++;
-        }
+    public synchronized void update(ArrayList<Edge> objects) {
+        edges.addAll(objects);
+        count++;
     }
 }

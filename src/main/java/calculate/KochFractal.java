@@ -91,7 +91,7 @@ public class KochFractal implements Subject {
     @Override
     public void notifyAllObservers() {
         for (Observer observer:observers) {
-            observer.update(this);
+            observer.update(edges);
         }
     }
 
