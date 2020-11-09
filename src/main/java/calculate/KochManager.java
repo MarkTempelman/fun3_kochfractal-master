@@ -115,3 +115,13 @@ public class KochManager implements Observer {
         count++;
     }
 }
+/*
+update the Edge tasks from the fractal see here for guide:
+https://stackoverflow.com/questions/34357005/javafx-task-update-progress-from-a-method
+give thread pool to front-end
+in front-end bind each task to a progressBar
+progressBar.progressProperty().bind(task.progressProperty());
+foreach progressbar there should also be a label to indicate which of the edges it shows
+this label should be bound like this
+labelCount.textProperty().bind(task.messageProperty());
+ */

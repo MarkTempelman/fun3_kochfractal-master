@@ -137,6 +137,10 @@ public class FUN3KochFractalFX extends Application {
             }
         });
         grid.add(buttonFitFractal, 14, 6);
+
+        grid.add(progressLeft, 0, 7);
+        grid.add(progressRight, 0, 8);
+        grid.add(progressBottom, 0, 9);
         
         // Add mouse clicked event to Koch panel
         kochPanel.addEventHandler(MouseEvent.MOUSE_CLICKED,
