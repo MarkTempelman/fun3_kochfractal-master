@@ -20,7 +20,9 @@ public class BottomEdge extends Task{
     @Override
     protected ArrayList<Edge> call() throws Exception {
         fractal.setLevel(level);
+        fractal.setProgressUpdate((workDone, totalWork) ->
+                updateProgress(workDone, totalWork));
         fractal.generateBottomEdge();
-        return fractal.getEdges();
+        return null;
     }
 }

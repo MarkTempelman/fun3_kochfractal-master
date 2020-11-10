@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 
 import fun3kochfractalfx.FUN3KochFractalFX;
 import interfaces.Observer;
+import javafx.scene.control.ProgressBar;
 import timeutil.TimeStamp;
 
 /**
@@ -56,12 +57,21 @@ public class KochManager implements Observer {
         pool.execute(leftEdge);
         pool.execute(rightEdge);
         pool.execute(bottomEdge);
-//        leftEdgeThread = new Thread(leftEdge);
-//        rightEdgeThread = new Thread(rightEdge);
-//        bottomEdgeThread = new Thread(bottomEdge);
-//        leftEdgeThread.start();
-//        rightEdgeThread.start();
-//        bottomEdgeThread.start();
+    }
+
+    private void bindTasksToProgress(){
+        ProgressBar firstProgress = application.getFirstProgress();
+        ProgressBar secondProgress = application.getSecondProgress();
+        ProgressBar thirdProgress = application.getThirdProgress();
+        firstProgress.progressProperty().unbind();
+        secondProgress.progressProperty().unbind();
+        thirdProgress.progressProperty().unbind();
+        firstProgress.setProgress(0);
+        secondProgress.setProgress(0);
+        thirdProgress.setProgress(0);
+        firstProgress.progressProperty().bind(leftEdge.progressProperty());
+        secondProgress.progressProperty().bind(rightEdge.progressProperty());
+        thirdProgress.progressProperty().bind(bottomEdge.progressProperty());
     }
     
     public void changeLevel(int nxt) {
@@ -72,6 +82,7 @@ public class KochManager implements Observer {
         tsCalc.setBegin("Begin calculating");
         createEdges(nxt);
         pool = Executors.newFixedThreadPool(3);
+        bindTasksToProgress();
         calculateEdges();
         while (count < 3) {
             try {

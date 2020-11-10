@@ -18,6 +18,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author Nico Kuijpers
@@ -60,9 +64,9 @@ public class FUN3KochFractalFX extends Application {
     private static final int THRESHOLD = 200_000;
     private final WritableImage image = new WritableImage(kpWidth, kpHeight);
 
-    private final ProgressBar progressLeft = new ProgressBar();
-    private final ProgressBar progressRight = new ProgressBar();
-    private final ProgressBar progressBottom = new ProgressBar();
+    private final ProgressBar firstProgress = new ProgressBar();
+    private final ProgressBar secondProgress = new ProgressBar();
+    private final ProgressBar thirdProgress = new ProgressBar();
 
 
     @Override
@@ -138,9 +142,9 @@ public class FUN3KochFractalFX extends Application {
         });
         grid.add(buttonFitFractal, 14, 6);
 
-        grid.add(progressLeft, 0, 7);
-        grid.add(progressRight, 0, 8);
-        grid.add(progressBottom, 0, 9);
+        grid.add(firstProgress, 0, 7);
+        grid.add(secondProgress, 0, 8);
+        grid.add(thirdProgress, 0, 9);
         
         // Add mouse clicked event to Koch panel
         kochPanel.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -316,6 +320,18 @@ public class FUN3KochFractalFX extends Application {
                 e.X2 * zoom + zoomTranslateX,
                 e.Y2 * zoom + zoomTranslateY,
                 e.color);
+    }
+
+    public ProgressBar getFirstProgress(){
+        return firstProgress;
+    }
+
+    public ProgressBar getSecondProgress() {
+        return secondProgress;
+    }
+
+    public ProgressBar getThirdProgress() {
+        return thirdProgress;
     }
 
     /**

@@ -20,6 +20,8 @@ public class LeftEdge extends Task{
     @Override
     protected ArrayList<Edge> call() throws Exception {
         fractal.setLevel(level);
+        fractal.setProgressUpdate((workDone, totalWork) ->
+                updateProgress(workDone, totalWork));
         fractal.generateLeftEdge();
         return fractal.getEdges();
     }
