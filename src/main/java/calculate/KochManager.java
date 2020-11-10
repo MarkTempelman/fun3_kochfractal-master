@@ -54,9 +54,9 @@ public class KochManager implements Observer {
 
     private void calculateEdges(){
         count = 0;
-        pool.execute(leftEdge);
-        pool.execute(rightEdge);
-        pool.execute(bottomEdge);
+        pool.submit(leftEdge);
+        pool.submit(rightEdge);
+        pool.submit(bottomEdge);
     }
 
     private void bindTasksToProgress(){
@@ -127,12 +127,8 @@ public class KochManager implements Observer {
     }
 }
 /*
-update the Edge tasks from the fractal see here for guide:
-https://stackoverflow.com/questions/34357005/javafx-task-update-progress-from-a-method
-give thread pool to front-end
-in front-end bind each task to a progressBar
-progressBar.progressProperty().bind(task.progressProperty());
 foreach progressbar there should also be a label to indicate which of the edges it shows
 this label should be bound like this
 labelCount.textProperty().bind(task.messageProperty());
+Multi threading is not working properly most likely caused by thread pool possible fix here https://www.baeldung.com/thread-pool-java-and-guava
  */

@@ -230,11 +230,21 @@ public class FUN3KochFractalFX extends Application {
     }
     
     public void setTextNrEdges(String text) {
-        labelNrEdgesText.setText(text);
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                labelNrEdgesText.setText(text);
+            }
+        });
     }
     
     public void setTextCalc(String text) {
-        labelCalcText.setText(text);
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                labelCalcText.setText(text);
+            }
+        });
     }
     
     public void setTextDraw(String text) {
