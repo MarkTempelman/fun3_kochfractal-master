@@ -1,0 +1,4 @@
+a) vooral het open closed principe want nu hoeft de KochFractal class niks meer van KochManager af te weten en kan de KochManager dus makkelijk vervangen worden zonder dat de KochFractal nog aangepast hoeft te worden.
+b) de KochFractal is het subject en de KochManager is de listener
+c) een FixedThreadPool omdat er altijd 3 threads nodig zullen zijn
+d) bij het binden van de threads aan de UI elementen
