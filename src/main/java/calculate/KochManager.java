@@ -63,12 +63,6 @@ public class KochManager implements Observer {
         ProgressBar firstProgress = application.getFirstProgress();
         ProgressBar secondProgress = application.getSecondProgress();
         ProgressBar thirdProgress = application.getThirdProgress();
-        firstProgress.progressProperty().unbind();
-        secondProgress.progressProperty().unbind();
-        thirdProgress.progressProperty().unbind();
-        firstProgress.setProgress(0);
-        secondProgress.setProgress(0);
-        thirdProgress.setProgress(0);
         firstProgress.progressProperty().bind(leftEdge.progressProperty());
         secondProgress.progressProperty().bind(rightEdge.progressProperty());
         thirdProgress.progressProperty().bind(bottomEdge.progressProperty());
@@ -126,9 +120,3 @@ public class KochManager implements Observer {
         count++;
     }
 }
-/*
-foreach progressbar there should also be a label to indicate which of the edges it shows
-this label should be bound like this
-labelCount.textProperty().bind(task.messageProperty());
-Multi threading is not working properly most likely caused by thread pool possible fix here https://www.baeldung.com/thread-pool-java-and-guava
- */
